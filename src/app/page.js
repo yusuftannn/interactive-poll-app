@@ -1,10 +1,10 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 export default function Home() {
-  const [question, setQuestion] = useState('');
-  const [options, setOptions] = useState(['', '']);
-  const [error, setError] = useState('');
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState(["", ""]);
+  const [error, setError] = useState("");
 
   const handleOptionChange = (index, value) => {
     const updated = [...options];
@@ -13,7 +13,7 @@ export default function Home() {
   };
 
   const handleAddOption = () => {
-    if (options.length < 6) setOptions([...options, '']);
+    if (options.length < 6) setOptions([...options, ""]);
   };
 
   const handleRemoveOption = (index) => {
@@ -24,29 +24,30 @@ export default function Home() {
   };
 
   const validateAndSave = () => {
-    const trimmedOptions = options.map(opt => opt.trim());
-    const hasEmpty = trimmedOptions.some(opt => opt === '');
-    const hasDuplicates = new Set(trimmedOptions).size !== trimmedOptions.length;
+    const trimmedOptions = options.map((opt) => opt.trim());
+    const hasEmpty = trimmedOptions.some((opt) => opt === "");
+    const hasDuplicates =
+      new Set(trimmedOptions).size !== trimmedOptions.length;
 
     if (!question.trim()) {
-      setError('Soru boş bırakılamaz.');
+      setError("Soru boş bırakılamaz.");
     } else if (hasEmpty) {
-      setError('Boş seçenek olamaz.');
+      setError("Boş seçenek olamaz.");
     } else if (hasDuplicates) {
-      setError('Seçenekler benzersiz olmalı.');
+      setError("Seçenekler benzersiz olmalı.");
     } else {
-      setError('');
+      setError("");
       const newPoll = {
         id: Date.now(),
         question: question.trim(),
         options: trimmedOptions,
         createdAt: new Date().toISOString(),
       };
-      const polls = JSON.parse(localStorage.getItem('polls') || '[]');
-      localStorage.setItem('polls', JSON.stringify([...polls, newPoll]));
-      alert('Anket başarıyla kaydedildi.');
-      setQuestion('');
-      setOptions(['', '']);
+      const polls = JSON.parse(localStorage.getItem("polls") || "[]");
+      localStorage.setItem("polls", JSON.stringify([...polls, newPoll]));
+      alert("Anket başarıyla kaydedildi.");
+      setQuestion("");
+      setOptions(["", ""]);
     }
   };
 
@@ -55,50 +56,57 @@ export default function Home() {
       <h1>Anket Oluştur</h1>
       <div>
         <label>Soru:</label>
-        <input
-          type="text"
-          value={question}
-          onChange={e => setQuestion(e.target.value)}
-          style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-        />
+        <div className="option-row">
+          <input
+            type="text"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+          />
+        </div>
       </div>
-      <div style={{ marginTop: '20px' }}>
+      <div style={{ marginTop: "20px" }}>
         <label>Cevap Seçenekleri:</label>
         {options.map((opt, i) => (
-          <div key={i} style={{ display: 'flex', marginTop: '8px' }}>
+          <div key={i} className="option-row">
             <input
               type="text"
               value={opt}
-              onChange={e => handleOptionChange(i, e.target.value)}
-              style={{ flex: 1, padding: '8px' }}
+              onChange={(e) => handleOptionChange(i, e.target.value)}
             />
             {options.length > 2 && (
-              <button onClick={() => handleRemoveOption(i)} style={{ marginLeft: '10px' }}>
-                Kaldır
-              </button>
+              <button onClick={() => handleRemoveOption(i)}>Kaldır</button>
             )}
           </div>
         ))}
+
         {options.length < 6 && (
-          <button onClick={handleAddOption} style={{ marginTop: '10px' }}>
+          <button onClick={handleAddOption} style={{ marginTop: "10px" }}>
             Seçenek Ekle
           </button>
         )}
       </div>
-      {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
-      <button onClick={validateAndSave} style={{ marginTop: '20px', padding: '10px 20px' }}>
+      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+      <button
+        onClick={validateAndSave}
+        style={{ marginTop: "20px", padding: "10px 20px" }}
+      >
         Kaydet
       </button>
 
-      <hr style={{ margin: '30px 0' }} />
+      <hr style={{ margin: "30px 0" }} />
 
       <h2>Ön İzleme</h2>
       <div>
-        <p><strong>{question || 'Soru buraya gelecek...'}</strong></p>
+        <p>
+          <strong>{question || "Soru buraya gelecek..."}</strong>
+        </p>
         {options.map((opt, i) => (
           <div key={i}>
             <input type="radio" disabled />
-            <label style={{ marginLeft: '5px' }}>{opt || `Seçenek ${i + 1}`}</label>
+            <label style={{ marginLeft: "5px" }}>
+              {opt || `Seçenek ${i + 1}`}
+            </label>
           </div>
         ))}
       </div>

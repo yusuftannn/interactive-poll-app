@@ -1,27 +1,27 @@
-'use client';
-import { useEffect, useState } from 'react';
-import PollCard from '../../components/PollCard';
+"use client";
+import { useEffect, useState } from "react";
+import PollCard from "../../components/PollCard";
 
 export default function ListPollsPage() {
   const [polls, setPolls] = useState([]);
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('polls') || '[]');
+    const stored = JSON.parse(localStorage.getItem("polls") || "[]");
     setPolls(stored);
   }, []);
 
   const handleOptionChange = (pollId, option) => {
-    setAnswers(prev => ({ ...prev, [pollId]: option }));
+    setAnswers((prev) => ({ ...prev, [pollId]: option }));
   };
 
   const handleSaveAnswer = (pollId) => {
-    const savedAnswers = JSON.parse(localStorage.getItem('answers') || '{}');
+    const savedAnswers = JSON.parse(localStorage.getItem("answers") || "{}");
     localStorage.setItem(
-      'answers',
+      "answers",
       JSON.stringify({ ...savedAnswers, [pollId]: answers[pollId] })
     );
-    alert('Cevap kaydedildi.');
+    alert("Cevap kaydedildi.");
   };
 
   return (
@@ -30,7 +30,7 @@ export default function ListPollsPage() {
       {polls.length === 0 ? (
         <p>Henüz anket oluşturulmamış.</p>
       ) : (
-        polls.map(poll => (
+        polls.map((poll) => (
           <PollCard
             key={poll.id}
             poll={poll}

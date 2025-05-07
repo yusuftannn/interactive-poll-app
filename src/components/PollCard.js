@@ -1,10 +1,12 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 
 export default function PollCard({ poll, selected, onChange, onSave }) {
   return (
-    <div style={{ marginBottom: '30px' }}>
-      <p><strong>{poll.question}</strong></p>
+    <div style={{ marginBottom: "30px" }}>
+      <p>
+        <strong>{poll.question}</strong>
+      </p>
       {poll.options.map((option, idx) => (
         <div key={idx}>
           <input
@@ -15,11 +17,13 @@ export default function PollCard({ poll, selected, onChange, onSave }) {
             checked={selected === option}
             onChange={() => onChange(option)}
           />
-          <label htmlFor={`${poll.id}-${idx}`} style={{ marginLeft: '5px' }}>{option}</label>
+          <label htmlFor={`${poll.id}-${idx}`} style={{ marginLeft: "5px" }}>
+            {option}
+          </label>
         </div>
       ))}
       <button
-        style={{ marginTop: '10px' }}
+        style={{ marginTop: "10px" }}
         onClick={onSave}
         disabled={!selected}
       >
