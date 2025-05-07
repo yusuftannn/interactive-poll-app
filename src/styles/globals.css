@@ -1,21 +1,31 @@
-body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
+html.light {
     background-color: #f7f7f7;
     color: #333;
+  }
+  
+  html.dark {
+    background-color: #1e1e1e;
+    color: #eee;
+  }
+  
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    transition: background-color 0.3s, color 0.3s;
   }
   
   .container {
     max-width: 600px;
     margin: 2rem auto;
     padding: 1rem;
-    background-color: white;
+    background-color: inherit;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
   
-  h1, h2 {
-    text-align: center;
+  nav a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
   }
   
