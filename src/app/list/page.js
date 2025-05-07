@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import PollCard from '../../components/PollCard';
 
 export default function ListPollsPage() {
   const [polls, setPolls] = useState([]);
@@ -30,29 +31,13 @@ export default function ListPollsPage() {
         <p>Henüz anket oluşturulmamış.</p>
       ) : (
         polls.map(poll => (
-          <div key={poll.id} style={{ marginBottom: '30px' }}>
-            <p><strong>{poll.question}</strong></p>
-            {poll.options.map((option, idx) => (
-              <div key={idx}>
-                <input
-                  type="radio"
-                  id={`${poll.id}-${idx}`}
-                  name={`poll-${poll.id}`}
-                  value={option}
-                  checked={answers[poll.id] === option}
-                  onChange={() => handleOptionChange(poll.id, option)}
-                />
-                <label htmlFor={`${poll.id}-${idx}`} style={{ marginLeft: '5px' }}>{option}</label>
-              </div>
-            ))}
-            <button
-              style={{ marginTop: '10px' }}
-              onClick={() => handleSaveAnswer(poll.id)}
-              disabled={!answers[poll.id]}
-            >
-              Cevabı Kaydet
-            </button>
-          </div>
+          <PollCard
+            key={poll.id}
+            poll={poll}
+            selected={answers[poll.id]}
+            onChange={(opt) => handleOptionChange(poll.id, opt)}
+            onSave={() => handleSaveAnswer(poll.id)}
+          />
         ))
       )}
     </div>
